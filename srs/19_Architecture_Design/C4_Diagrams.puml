@@ -1,0 +1,441 @@
+@startuml C4_Diagrams
+' =====================================================================
+' PLATFORM NAME - C4 Model Architecture Diagrams
+' Version: 1.0.0
+' Last Updated: 2026-06-30
+' =====================================================================
+
+' ---------------------------------------------------------------------
+' LAYOUT CONFIGURATION
+' ---------------------------------------------------------------------
+!include <C4/C4_Container>
+!include <C4/C4_Context>
+!include <C4/C4_Component>
+!include <C4/C4_Dynamic>
+!include <C4/C4_Deployment>
+
+LAYOUT_TOP_DOWN()
+LAYOUT_AS_SKETCH()
+
+' ---------------------------------------------------------------------
+' LEVEL 1: SYSTEM CONTEXT DIAGRAM
+' Shows the system boundary and external interactions
+' ---------------------------------------------------------------------
+title C4 Model - Level 1: System Context Diagram
+
+Person(customer, "Customer", "Orders food, tracks deliveries, manages profile")
+Person(merchant, "Merchant", "Manages store, menu, orders, and finances")
+Person(driver, "Delivery Driver", "Accepts orders, navigates, completes deliveries")
+Person(admin, "Platform Admin", "Monitors operations, manages users, configures platform")
+Person(developer, "Third-Party Developer", "Builds applications using platform APIs")
+Person(partner, "Enterprise Partner", "Integrates white-label solutions")
+
+System(platform, "Platform", "API-first commerce and logistics platform enabling multi-sided marketplace operations")
+
+System_Ext(payment_gateway, "Payment Gateways", "Stripe, Paymob, Adyen, Checkout.com")
+System_Ext(mapping_service, "Mapping Services", "Google Maps, Mapbox, OpenStreetMap")
+System_Ext(notification_service, "Notification Providers", "FCM, APNs, SendGrid, Twilio, AWS SES")
+System_Ext(erp_system, "ERP Systems", "SAP, Oracle, Microsoft Dynamics, NetSuite")
+System_Ext(pos_system, "POS Systems", "Square, Toast, Clover, Lightspeed")
+System_Ext(crm_system, "CRM Systems", "Salesforce, HubSpot, Zoho CRM")
+System_Ext(idp, "Identity Providers", "Okta, Azure AD, Google Workspace")
+System_Ext(storage, "Object Storage", "AWS S3, GCP Cloud Storage, Azure Blob")
+System_Ext(cdn, "Content Delivery Network", "CloudFront, Cloudflare")
+
+Rel(customer, platform, "Places orders, tracks deliveries, manages account", "HTTPS/REST, WebSocket")
+Rel(merchant, platform, "Manages store, menu, orders, finances", "HTTPS/REST")
+Rel(driver, platform, "Accepts orders, navigates, completes deliveries", "HTTPS/REST, WebSocket")
+Rel(admin, platform, "Monitors operations, manages platform", "HTTPS/REST")
+Rel(developer, platform, "Builds applications, integrates APIs", "HTTPS/REST, Webhooks")
+Rel(partner, platform, "Integrates white-label solutions", "HTTPS/gRPC, REST")
+
+Rel(platform, payment_gateway, "Processes payments, refunds, subscriptions", "HTTPS/REST, Webhooks")
+Rel(platform, mapping_service, "Geocoding, routing, distance matrix, maps", "HTTPS/REST, gRPC")
+Rel(platform, notification_service, "Push notifications, emails, SMS", "HTTPS/REST, gRPC")
+Rel(platform, erp_system, "Syncs inventory, orders, settlements", "REST/SOAP/Kafka")
+Rel(platform, pos_system, "Syncs menus, orders, inventory", "REST/Webhooks")
+Rel(platform, crm_system, "Syncs customers, campaigns, support", "REST/Webhooks")
+Rel(platform, idp, "Enterprise SSO and identity federation", "SAML/OIDC/SCIM")
+Rel(platform, storage, "Stores static assets", "S3 API/gRPC")
+Rel(platform, cdn, "Accelerates static content delivery", "HTTPS")
+
+' ---------------------------------------------------------------------
+' LEVEL 2: CONTAINER DIAGRAM
+' Shows the major containers within the system
+' ---------------------------------------------------------------------
+title C4 Model - Level 2: Container Diagram
+
+Person(customer2, "Customer", "Uses the mobile app and web app")
+Person(merchant2, "Merchant", "Uses the merchant dashboard")
+Person(driver2, "Driver", "Uses the driver mobile app")
+Person(admin2, "Platform Admin", "Uses the admin portal")
+
+System_Boundary(platform_boundary, "Platform") {
+    Container(api_gateway, "API Gateway", "Kong / KrakenD", "Routes requests, authenticates, rate limits, caches, logs")
+    Container(auth_service, "Auth Service", "Go / Spring Boot", "Authentication, authorization, MFA, SSO")
+    Container(order_service, "Order Service", "Go / Spring Boot", "Order lifecycle, cart, checkout, status management")
+    Container(merchant_service, "Merchant Service", "Go / Spring Boot", "Merchant onboarding, store management, menu catalog")
+    Container(driver_service, "Driver Service", "Go / Spring Boot", "Driver onboarding, assignment, performance, earnings")
+    Container(payment_service, "Payment Service", "Go / Spring Boot", "Payment processing, refunds, wallet, subscription")
+    Container(delivery_service, "Delivery Service", "Go / Spring Boot", "Delivery management, tracking, geofencing, ETA")
+    Container(dispatch_service, "Dispatch Service", "Go / Spring Boot", "Order routing, batch optimization, assignment algorithms")
+    Container(notification_service2, "Notification Service", "Node.js / Go", "Push, email, SMS, in-app, webhook delivery")
+    Container(analytics_service, "Analytics Service", "Python / Go", "Business intelligence, reporting, predictive models")
+    Container(admin_service, "Admin Service", "Go / Spring Boot", "Admin dashboard, user management, configuration")
+    Container(integration_service, "Integration Service", "Go / Python", "Third-party integrations (ERP, POS, CRM, payment gateways)")
+    Container(message_bus, "Message Bus", "Apache Kafka / RabbitMQ", "Event streaming and asynchronous communication")
+    Container(cache, "Cache Layer", "Redis", "Session storage, API caching, rate limiting, geocoding cache")
+    Container(database, "Database Layer", "PostgreSQL", "Transactional data storage with read replicas")
+    Container(search_engine, "Search Engine", "Elasticsearch / OpenSearch", "Search, log aggregation, analytics")
+    Container(object_storage, "Object Storage", "AWS S3 / GCP Cloud Storage", "File and asset storage")
+    Container(data_warehouse, "Data Warehouse", "Snowflake / BigQuery", "Analytics and business intelligence")
+    Container(web_app, "Web Application", "React / Next.js", "Customer and merchant web interfaces")
+    Container(mobile_app, "Mobile Application", "Flutter / React Native", "Customer and driver mobile apps")
+    Container(admin_portal, "Admin Portal", "React / Next.js", "Admin operations and configuration interface")
+    Container(developer_portal, "Developer Portal", "React / Next.js", "API documentation, SDKs, API keys, webhooks")
+}
+
+System_Ext(payment_gateway2, "Payment Gateways", "Stripe, Paymob, Adyen")
+System_Ext(mapping_service2, "Mapping Services", "Google Maps, Mapbox")
+System_Ext(notification_providers, "Notification Providers", "FCM, APNs, SendGrid, Twilio")
+
+Rel(customer2, web_app, "Uses", "HTTPS")
+Rel(customer2, mobile_app, "Uses", "HTTPS/WSS")
+Rel(merchant2, web_app, "Uses", "HTTPS")
+Rel(driver2, mobile_app, "Uses", "HTTPS/WSS")
+Rel(admin2, admin_portal, "Uses", "HTTPS")
+Rel(developer, developer_portal, "Uses", "HTTPS")
+
+Rel(web_app, api_gateway, "Makes API calls", "HTTPS/REST")
+Rel(mobile_app, api_gateway, "Makes API calls", "HTTPS/REST, WebSocket")
+Rel(admin_portal, api_gateway, "Makes API calls", "HTTPS/REST")
+Rel(developer_portal, api_gateway, "Makes API calls", "HTTPS/REST")
+
+Rel(api_gateway, auth_service, "Routes auth requests", "gRPC/HTTP")
+Rel(api_gateway, order_service, "Routes order requests", "gRPC/HTTP")
+Rel(api_gateway, merchant_service, "Routes merchant requests", "gRPC/HTTP")
+Rel(api_gateway, driver_service, "Routes driver requests", "gRPC/HTTP")
+Rel(api_gateway, payment_service, "Routes payment requests", "gRPC/HTTP")
+Rel(api_gateway, delivery_service, "Routes delivery requests", "gRPC/HTTP")
+Rel(api_gateway, dispatch_service, "Routes dispatch requests", "gRPC/HTTP")
+Rel(api_gateway, notification_service2, "Routes notification requests", "gRPC/HTTP")
+Rel(api_gateway, analytics_service, "Routes analytics requests", "gRPC/HTTP")
+Rel(api_gateway, admin_service, "Routes admin requests", "gRPC/HTTP")
+Rel(api_gateway, integration_service, "Routes integration requests", "gRPC/HTTP")
+
+Rel(order_service, message_bus, "Publishes events", "Kafka")
+Rel(payment_service, message_bus, "Publishes events", "Kafka")
+Rel(delivery_service, message_bus, "Publishes events", "Kafka")
+Rel(dispatch_service, message_bus, "Publishes events", "Kafka")
+Rel(notification_service2, message_bus, "Consumes events", "Kafka")
+Rel(analytics_service, message_bus, "Consumes events", "Kafka")
+
+Rel(order_service, database, "Reads/writes", "SQL")
+Rel(merchant_service, database, "Reads/writes", "SQL")
+Rel(driver_service, database, "Reads/writes", "SQL")
+Rel(payment_service, database, "Reads/writes", "SQL")
+Rel(delivery_service, database, "Reads/writes", "SQL")
+Rel(dispatch_service, database, "Reads/writes", "SQL")
+Rel(analytics_service, database, "Reads/writes", "SQL")
+Rel(admin_service, database, "Reads/writes", "SQL")
+Rel(integration_service, database, "Reads/writes", "SQL")
+
+Rel(order_service, cache, "Caches sessions, order data", "Redis")
+Rel(dispatch_service, cache, "Caches driver locations, routes", "Redis")
+Rel(integration_service, cache, "Caches geocode, distance, route", "Redis")
+
+Rel(payment_service, payment_gateway2, "Processes payments", "HTTPS/REST, Webhooks")
+Rel(dispatch_service, mapping_service2, "Calculates routes, distances", "HTTPS/REST, gRPC")
+Rel(notification_service2, notification_providers, "Delivers notifications", "HTTPS/REST, gRPC")
+Rel(integration_service, payment_gateway2, "Processes payments", "HTTPS/REST, Webhooks")
+Rel(integration_service, mapping_service2, "Calculates routes, distances", "HTTPS/REST, gRPC")
+
+Rel(analytics_service, data_warehouse, "Stores analytics data", "SQL")
+Rel(search_engine, database, "Indexes data", "Elasticsearch")
+
+' ---------------------------------------------------------------------
+' LEVEL 3: COMPONENT DIAGRAM - ORDER SERVICE
+' Shows the internal components of the Order Service
+' ---------------------------------------------------------------------
+title C4 Model - Level 3: Component Diagram - Order Service
+
+Container(order_service_component, "Order Service", "Go / Spring Boot", "Manages order lifecycle and fulfillment")
+
+System_Boundary(order_service_boundary, "Order Service") {
+    Component(order_api, "Order API Controller", "REST Controller", "Handles HTTP requests for order operations")
+    Component(order_validator, "Order Validator", "Validation Service", "Validates order data, availability, eligibility")
+    Component(order_orchestrator, "Order Orchestrator", "Orchestration Service", "Orchestrates order creation and status transitions")
+    Component(order_state_machine, "Order State Machine", "State Machine", "Manages order state transitions with business rules")
+    Component(order_repository, "Order Repository", "Data Access", "Persistence operations for orders and order items")
+    Component(order_cache, "Order Cache", "Redis Client", "Caches order data for fast retrieval")
+    Component(order_publisher, "Order Event Publisher", "Kafka Producer", "Publishes order events to the message bus")
+    Component(order_consumer, "Order Event Consumer", "Kafka Consumer", "Consumes payment and delivery events")
+    Component(order_tracking, "Order Tracking Service", "Tracking Service", "Manages real-time order tracking")
+    Component(timeline_service, "Timeline Service", "Timeline Service", "Manages order timeline and history")
+}
+
+System_Ext(order_db, "Order Database", "PostgreSQL", "Stores order data")
+System_Ext(order_cache_ext, "Order Cache", "Redis", "Caches order data")
+System_Ext(order_event_bus, "Event Bus", "Kafka", "Order event stream")
+System_Ext(payment_service_ext, "Payment Service", "External Service", "Processes payments")
+System_Ext(delivery_service_ext, "Delivery Service", "External Service", "Manages deliveries")
+System_Ext(notification_service_ext, "Notification Service", "External Service", "Sends notifications")
+System_Ext(merchant_service_ext, "Merchant Service", "External Service", "Merchant validation and data")
+
+Rel(order_api, order_validator, "Validates requests", "gRPC")
+Rel(order_api, order_orchestrator, "Orchestrates operations", "gRPC")
+Rel(order_api, order_tracking, "Tracks orders", "gRPC")
+
+Rel(order_validator, merchant_service_ext, "Validates merchant", "gRPC/HTTP")
+Rel(order_validator, order_repository, "Checks data", "SQL")
+
+Rel(order_orchestrator, order_state_machine, "Transitions state", "gRPC")
+Rel(order_orchestrator, order_repository, "Persists data", "SQL")
+Rel(order_orchestrator, order_publisher, "Publishes events", "Kafka")
+Rel(order_orchestrator, order_cache, "Caches data", "Redis")
+
+Rel(order_state_machine, order_repository, "Persists state", "SQL")
+Rel(order_state_machine, order_publisher, "Publishes events", "Kafka")
+
+Rel(order_repository, order_db, "Reads/writes", "SQL")
+Rel(order_cache, order_cache_ext, "Reads/writes", "Redis")
+Rel(order_publisher, order_event_bus, "Publishes", "Kafka")
+Rel(order_consumer, order_event_bus, "Consumes", "Kafka")
+Rel(order_consumer, order_orchestrator, "Updates state", "gRPC")
+
+Rel(order_tracking, order_repository, "Reads data", "SQL")
+Rel(order_tracking, delivery_service_ext, "Gets tracking data", "gRPC/HTTP")
+Rel(order_tracking, order_cache, "Caches data", "Redis")
+
+Rel(timeline_service, order_repository, "Reads/writes", "SQL")
+Rel(timeline_service, order_publisher, "Publishes events", "Kafka")
+
+Rel(order_consumer, payment_service_ext, "Handles payment events", "gRPC/HTTP")
+Rel(order_consumer, delivery_service_ext, "Handles delivery events", "gRPC/HTTP")
+Rel(order_consumer, notification_service_ext, "Sends notifications", "gRPC/HTTP")
+
+' ---------------------------------------------------------------------
+' LEVEL 3: COMPONENT DIAGRAM - PAYMENT SERVICE
+' Shows the internal components of the Payment Service
+' ---------------------------------------------------------------------
+title C4 Model - Level 3: Component Diagram - Payment Service
+
+Container(payment_service_component, "Payment Service", "Go / Spring Boot", "Processes payments, refunds, and subscriptions")
+
+System_Boundary(payment_service_boundary, "Payment Service") {
+    Component(payment_api, "Payment API Controller", "REST Controller", "Handles HTTP requests for payment operations")
+    Component(payment_processor, "Payment Processor", "Processor Service", "Processes payment authorizations and captures")
+    Component(refund_processor, "Refund Processor", "Processor Service", "Processes full and partial refunds")
+    Component(wallet_service, "Wallet Service", "Wallet Service", "Manages digital wallet balances and transactions")
+    Component(subscription_service, "Subscription Service", "Subscription Service", "Manages recurring payments and subscriptions")
+    Component(gateway_adapter, "Gateway Adapter", "Adapter Layer", "Abstracts payment gateway integrations")
+    Component(payment_repository, "Payment Repository", "Data Access", "Persistence operations for payment data")
+    Component(payment_publisher, "Payment Event Publisher", "Kafka Producer", "Publishes payment events")
+    Component(payment_consumer, "Payment Event Consumer", "Kafka Consumer", "Consumes order events")
+    Component(webhook_handler, "Webhook Handler", "Webhook Processor", "Handles payment gateway webhooks")
+}
+
+System_Ext(payment_db, "Payment Database", "PostgreSQL", "Stores payment data")
+System_Ext(payment_event_bus, "Event Bus", "Kafka", "Payment event stream")
+System_Ext(order_service_ext, "Order Service", "External Service", "Order data and status")
+System_Ext(notification_service_ext2, "Notification Service", "External Service", "Sends notifications")
+
+Rel(payment_api, payment_processor, "Processes payments", "gRPC")
+Rel(payment_api, refund_processor, "Processes refunds", "gRPC")
+Rel(payment_api, wallet_service, "Manages wallets", "gRPC")
+Rel(payment_api, subscription_service, "Manages subscriptions", "gRPC")
+
+Rel(payment_processor, payment_repository, "Persists data", "SQL")
+Rel(payment_processor, gateway_adapter, "Routes to gateway", "gRPC")
+Rel(payment_processor, payment_publisher, "Publishes events", "Kafka")
+
+Rel(refund_processor, payment_repository, "Persists data", "SQL")
+Rel(refund_processor, gateway_adapter, "Routes to gateway", "gRPC")
+Rel(refund_processor, payment_publisher, "Publishes events", "Kafka")
+
+Rel(wallet_service, payment_repository, "Persists data", "SQL")
+Rel(wallet_service, payment_publisher, "Publishes events", "Kafka")
+Rel(wallet_service, order_service_ext, "Validates orders", "gRPC/HTTP")
+
+Rel(subscription_service, payment_repository, "Persists data", "SQL")
+Rel(subscription_service, gateway_adapter, "Routes to gateway", "gRPC")
+Rel(subscription_service, payment_publisher, "Publishes events", "Kafka")
+
+Rel(gateway_adapter, payment_db, "Uses", "SQL")
+Rel(payment_repository, payment_db, "Reads/writes", "SQL")
+Rel(payment_publisher, payment_event_bus, "Publishes", "Kafka")
+Rel(payment_consumer, payment_event_bus, "Consumes", "Kafka")
+Rel(payment_consumer, payment_processor, "Updates state", "gRPC")
+
+Rel(webhook_handler, payment_repository, "Persists data", "SQL")
+Rel(webhook_handler, payment_processor, "Updates state", "gRPC")
+Rel(webhook_handler, payment_publisher, "Publishes events", "Kafka")
+Rel(webhook_handler, notification_service_ext2, "Sends notifications", "gRPC/HTTP")
+
+Rel(payment_consumer, order_service_ext, "Gets order data", "gRPC/HTTP")
+
+' ---------------------------------------------------------------------
+' LEVEL 4: DEPLOYMENT DIAGRAM
+' Shows the deployment architecture across regions and availability zones
+' ---------------------------------------------------------------------
+title C4 Model - Level 4: Deployment Diagram
+
+Deployment_Node(aws_primary, "AWS Production", "Primary Region (us-east-1)") {
+    Deployment_Node(aws_az1, "Availability Zone 1", "us-east-1a") {
+        Deployment_Node(k8s_node1, "Kubernetes Node 1", "m6g.2xlarge") {
+            Container_Instance(api_gateway_inst, "API Gateway Pod", "Kong", "Handles API traffic")
+            Container_Instance(order_service_inst, "Order Service Pod", "Go/Spring Boot", "Manages orders")
+            Container_Instance(payment_service_inst, "Payment Service Pod", "Go/Spring Boot", "Processes payments")
+            Container_Instance(delivery_service_inst, "Delivery Service Pod", "Go/Spring Boot", "Manages deliveries")
+            Container_Instance(dispatch_service_inst, "Dispatch Service Pod", "Go/Spring Boot", "Routes orders")
+            Container_Instance(redis_inst, "Redis Cache Pod", "Redis", "Caching layer")
+        }
+        Deployment_Node(db_primary, "Database Primary", "db.r6g.2xlarge") {
+            Container_Instance(postgres_primary, "PostgreSQL Primary", "PostgreSQL 16", "Primary database")
+        }
+        Deployment_Node(kafka_primary, "Kafka Broker 1", "kafka.m6g.2xlarge") {
+            Container_Instance(kafka_broker1, "Kafka Broker 1", "Kafka 3.x", "Message broker")
+        }
+    }
+    Deployment_Node(aws_az2, "Availability Zone 2", "us-east-1b") {
+        Deployment_Node(k8s_node2, "Kubernetes Node 2", "m6g.2xlarge") {
+            Container_Instance(merchant_service_inst, "Merchant Service Pod", "Go/Spring Boot", "Manages merchants")
+            Container_Instance(driver_service_inst, "Driver Service Pod", "Go/Spring Boot", "Manages drivers")
+            Container_Instance(notification_service_inst, "Notification Service Pod", "Node.js/Go", "Sends notifications")
+            Container_Instance(analytics_service_inst, "Analytics Service Pod", "Python/Go", "Analytics and reporting")
+            Container_Instance(admin_service_inst, "Admin Service Pod", "Go/Spring Boot", "Admin operations")
+            Container_Instance(redis_replica_inst, "Redis Cache Replica", "Redis", "Read replica")
+        }
+        Deployment_Node(db_replica1, "Database Replica 1", "db.r6g.2xlarge") {
+            Container_Instance(postgres_replica1, "PostgreSQL Replica 1", "PostgreSQL 16", "Read replica")
+        }
+        Deployment_Node(kafka_secondary, "Kafka Broker 2", "kafka.m6g.2xlarge") {
+            Container_Instance(kafka_broker2, "Kafka Broker 2", "Kafka 3.x", "Message broker")
+        }
+    }
+    Deployment_Node(aws_az3, "Availability Zone 3", "us-east-1c") {
+        Deployment_Node(k8s_node3, "Kubernetes Node 3", "m6g.2xlarge") {
+            Container_Instance(integration_service_inst, "Integration Service Pod", "Go/Python", "Third-party integrations")
+            Container_Instance(auth_service_inst, "Auth Service Pod", "Go/Spring Boot", "Authentication")
+        }
+        Deployment_Node(db_replica2, "Database Replica 2", "db.r6g.2xlarge") {
+            Container_Instance(postgres_replica2, "PostgreSQL Replica 2", "PostgreSQL 16", "Read replica")
+        }
+        Deployment_Node(kafka_tertiary, "Kafka Broker 3", "kafka.m6g.2xlarge") {
+            Container_Instance(kafka_broker3, "Kafka Broker 3", "Kafka 3.x", "Message broker")
+        }
+    }
+    Deployment_Node(load_balancer, "Load Balancer", "AWS ALB") {
+        Container_Instance(alb_inst, "Application Load Balancer", "ALB", "Distributes traffic")
+    }
+    Deployment_Node(s3_storage, "Object Storage", "AWS S3") {
+        Container_Instance(s3_bucket, "S3 Bucket", "S3", "Static assets, backups")
+    }
+    Deployment_Node(elasticsearch_cluster, "Elasticsearch Cluster", "ES 8.x") {
+        Container_Instance(es_node1, "ES Node 1", "Elasticsearch 8.x", "Search and logs")
+        Container_Instance(es_node2, "ES Node 2", "Elasticsearch 8.x", "Search and logs")
+        Container_Instance(es_node3, "ES Node 3", "Elasticsearch 8.x", "Search and logs")
+    }
+}
+
+Deployment_Node(aws_dr, "AWS DR Region", "Secondary Region (us-west-2)") {
+    Deployment_Node(dr_k8s, "DR Kubernetes", "Replica Cluster") {
+        Container_Instance(dr_api_gateway, "API Gateway DR Pod", "Kong", "Failover API gateway")
+        Container_Instance(dr_order_service, "Order Service DR Pod", "Go/Spring Boot", "Failover order service")
+        Container_Instance(dr_payment_service, "Payment Service DR Pod", "Go/Spring Boot", "Failover payment service")
+        Container_Instance(dr_db, "Database DR", "db.r6g.2xlarge", "Replicated database")
+        Container_Instance(dr_kafka, "Kafka DR Broker", "kafka.m6g.2xlarge", "Replicated broker")
+    }
+}
+
+Rel(alb_inst, api_gateway_inst, "Routes traffic to", "HTTPS")
+Rel(alb_inst, api_gateway_inst, "Routes traffic to", "HTTPS")
+Rel(api_gateway_inst, order_service_inst, "Routes order requests", "gRPC")
+Rel(api_gateway_inst, payment_service_inst, "Routes payment requests", "gRPC")
+Rel(api_gateway_inst, delivery_service_inst, "Routes delivery requests", "gRPC")
+Rel(api_gateway_inst, dispatch_service_inst, "Routes dispatch requests", "gRPC")
+Rel(api_gateway_inst, merchant_service_inst, "Routes merchant requests", "gRPC")
+Rel(api_gateway_inst, driver_service_inst, "Routes driver requests", "gRPC")
+Rel(api_gateway_inst, notification_service_inst, "Routes notification requests", "gRPC")
+Rel(api_gateway_inst, analytics_service_inst, "Routes analytics requests", "gRPC")
+Rel(api_gateway_inst, admin_service_inst, "Routes admin requests", "gRPC")
+Rel(api_gateway_inst, integration_service_inst, "Routes integration requests", "gRPC")
+Rel(api_gateway_inst, auth_service_inst, "Routes auth requests", "gRPC")
+
+Rel(order_service_inst, postgres_primary, "Reads/writes", "SQL")
+Rel(payment_service_inst, postgres_primary, "Reads/writes", "SQL")
+Rel(merchant_service_inst, postgres_primary, "Reads/writes", "SQL")
+Rel(driver_service_inst, postgres_primary, "Reads/writes", "SQL")
+Rel(order_service_inst, postgres_replica1, "Reads", "SQL")
+Rel(order_service_inst, postgres_replica2, "Reads", "SQL")
+
+Rel(order_service_inst, kafka_broker1, "Publishes events", "Kafka")
+Rel(order_service_inst, kafka_broker2, "Publishes events", "Kafka")
+Rel(order_service_inst, kafka_broker3, "Publishes events", "Kafka")
+Rel(payment_service_inst, kafka_broker1, "Publishes events", "Kafka")
+Rel(delivery_service_inst, kafka_broker1, "Publishes events", "Kafka")
+
+Rel(order_service_inst, redis_inst, "Caches", "Redis")
+Rel(dispatch_service_inst, redis_inst, "Caches locations, routes", "Redis")
+
+Rel(integration_service_inst, postgres_primary, "Reads/writes", "SQL")
+
+Rel(postgres_primary, postgres_replica1, "Replicates", "Streaming Replication")
+Rel(postgres_primary, postgres_replica2, "Replicates", "Streaming Replication")
+Rel(postgres_primary, dr_db, "Replicates (cross-region)", "Streaming Replication")
+
+Rel(kafka_broker1, kafka_broker2, "Replicates", "Inter-broker replication")
+Rel(kafka_broker1, kafka_broker3, "Replicates", "Inter-broker replication")
+Rel(kafka_broker1, dr_kafka, "Replicates (cross-region)", "MirrorMaker 2.0")
+
+Rel(order_service_inst, elasticsearch_cluster, "Indexes", "ES")
+Rel(analytics_service_inst, elasticsearch_cluster, "Queries", "ES")
+Rel(notification_service_inst, elasticsearch_cluster, "Stores logs", "ES")
+
+' ---------------------------------------------------------------------
+' DYNAMIC DIAGRAM: ORDER PLACEMENT SEQUENCE
+' ---------------------------------------------------------------------
+title C4 Model - Dynamic Diagram: Order Placement Sequence
+
+Person(customer_seq, "Customer", "Places order")
+Container(order_service_seq, "Order Service", "Manages orders")
+Container(payment_service_seq, "Payment Service", "Processes payments")
+Container(delivery_service_seq, "Delivery Service", "Manages deliveries")
+Container(notification_service_seq, "Notification Service", "Sends notifications")
+Container(message_bus_seq, "Message Bus", "Event streaming")
+Container(database_seq, "Database", "Persistence")
+
+Rel(customer_seq, order_service_seq, "1. Places order", "HTTPS/REST")
+Rel(order_service_seq, database_seq, "2. Creates order", "SQL")
+Rel(order_service_seq, message_bus_seq, "3. Publishes OrderCreated event", "Kafka")
+Rel(order_service_seq, payment_service_seq, "4. Processes payment", "gRPC")
+Rel(payment_service_seq, database_seq, "5. Records payment", "SQL")
+Rel(payment_service_seq, message_bus_seq, "6. Publishes PaymentAuthorized", "Kafka")
+Rel(order_service_seq, notification_service_seq, "7. Sends confirmation", "gRPC")
+Rel(order_service_seq, delivery_service_seq, "8. Initiates delivery", "gRPC")
+Rel(delivery_service_seq, message_bus_seq, "9. Publishes DeliveryAssigned", "Kafka")
+Rel(order_service_seq, customer_seq, "10. Returns order confirmation", "HTTPS/REST")
+
+' ---------------------------------------------------------------------
+' DYNAMIC DIAGRAM: DELIVERY TRACKING SEQUENCE
+' ---------------------------------------------------------------------
+title C4 Model - Dynamic Diagram: Delivery Tracking Sequence
+
+Person(customer_track, "Customer", "Tracks delivery")
+Container(delivery_service_track, "Delivery Service", "Manages deliveries")
+Container(driver_service_track, "Driver Service", "Manages drivers")
+Container(message_bus_track, "Message Bus", "Event streaming")
+Container(cache_track, "Cache Layer", "Redis")
+Container(websocket_track, "WebSocket Gateway", "Real-time updates")
+
+Rel(customer_track, websocket_track, "1. Opens WebSocket connection", "WSS")
+Rel(driver_service_track, message_bus_track, "2. Sends location updates", "Kafka")
+Rel(message_bus_track, delivery_service_track, "3. Consumes location events", "Kafka")
+Rel(delivery_service_track, cache_track, "4. Caches location", "Redis")
+Rel(delivery_service_track, websocket_track, "5. Pushes location updates", "WSS")
+Rel(websocket_track, customer_track, "6. Updates live map", "WSS")
+Rel(delivery_service_track, message_bus_track, "7. Publishes ETA updates", "Kafka")
+Rel(message_bus_track, websocket_track, "8. Pushes ETA updates", "WSS")
+Rel(websocket_track, customer_track, "9. Updates ETA display", "WSS")
+
+@enduml

@@ -1,0 +1,199 @@
+Section,Requirement ID,Requirement Name,Description,Priority,Business Rule,API Endpoint(s),Test Case(s),Status,Notes
+Customer,CUS-001,Customer Registration,Register new customer with email and password,High,BR-CUS-001,POST /api/v1/auth/register,TC-CUS-001,Verified,Completed
+Customer,CUS-002,Phone OTP Registration,Register new customer with phone OTP,High,BR-CUS-002,POST /api/v1/auth/login/otp,TC-CUS-002,Verified,Completed
+Customer,CUS-003,Social Login Registration,Register with Google/Facebook/Apple,Medium,BR-CUS-013,POST /api/v1/auth/login/social,TC-CUS-003,Verified,Completed
+Customer,CUS-004,Email/Password Login,Login with email and password,High,BR-CUS-004,POST /api/v1/auth/login,TC-CUS-010,Verified,Completed
+Customer,CUS-005,Phone OTP Login,Login with phone one-time password,High,BR-CUS-004,POST /api/v1/auth/login/otp/verify,TC-CUS-011,Verified,Completed
+Customer,CUS-006,Forgot Password,Request password reset via email,High,BR-CUS-006,POST /api/v1/auth/forgot-password,TC-CUS-008,Verified,Completed
+Customer,CUS-007,MFA Verification,Multi-factor authentication verification,High,BR-CUS-015,POST /api/v1/auth/mfa/verify,TC-CUS-015,Verified,Completed
+Customer,CUS-008,View Profile,Get current customer profile,High,BR-CUS-012,GET /api/v1/customers/me,TC-CUS-017,Verified,Completed
+Customer,CUS-009,Update Profile,Update customer profile information,High,BR-CUS-012,PUT /api/v1/customers/me,TC-CUS-018,Verified,Completed
+Customer,CUS-010,Add Delivery Address,Add new delivery address to address book,High,BR-CUS-023,POST /api/v1/customers/me/addresses,TC-CUS-023,Verified,Completed
+Customer,CUS-011,Update Delivery Address,Update existing delivery address,High,BR-CUS-024,PUT /api/v1/customers/me/addresses/{id},TC-CUS-024,Verified,Completed
+Customer,CUS-012,Delete Delivery Address,Remove delivery address from address book,High,BR-CUS-025,DELETE /api/v1/customers/me/addresses/{id},TC-CUS-025,Verified,Completed
+Customer,CUS-013,GDPR Data Export,Request personal data export (Subject Access Request),High,BR-CUS-009,GET /api/v1/customers/me/export,TC-CUS-029,Verified,Completed
+Customer,CUS-014,GDPR Account Deletion,Delete customer account (Right to be Forgotten),High,BR-CUS-010,DELETE /api/v1/customers/me,TC-CUS-030,Verified,Completed
+Customer,CUS-015,View Order History,List historical customer orders,Medium,BR-ORD-014,GET /api/v1/orders,TC-ORD-018,Verified,Completed
+Customer,CUS-016,Reorder Previous Order,Recreate cart from previous order,Medium,BR-ORD-015,POST /api/v1/orders/{id}/reorder,TC-ORD-020,Verified,Completed
+Customer,CUS-017,Loyalty Points Balance,View customer loyalty points balance,High,BR-LOY-001,GET /api/v1/customers/me/loyalty,TC-LOY-001,Verified,Completed
+Customer,CUS-018,Redeem Loyalty Rewards,Redeem points for rewards and vouchers,High,BR-LOY-006,POST /api/v1/customers/me/loyalty/redeem,TC-LOY-006,Verified,Completed
+Customer,CUS-019,Referral Program,View referral code and referral history,Medium,BR-LOY-008,GET /api/v1/customers/me/referral,TC-LOY-014,Verified,Completed
+Customer,CUS-020,Wallet Management,Top-up and manage digital wallet balance,High,BR-PAY-005,POST /api/v1/customers/me/wallet/topup,TC-PAY-012,Verified,Completed
+Merchant,MER-001,Merchant Application Start,Start new merchant registration application,High,BR-MER-001,POST /api/v1/merchant/application,TC-MER-001,Verified,Completed
+Merchant,MER-002,Merchant Application Complete,Complete and submit merchant application,High,BR-MER-003,PUT /api/v1/merchant/application/{id},TC-MER-002,Verified,Completed
+Merchant,MER-003,Document Upload,Upload merchant verification documents,High,BR-MER-003,POST /api/v1/merchant/application/{id}/documents,TC-MER-003,Verified,Completed
+Merchant,MER-004,Admin Merchant Approval,Admin approves merchant application,High,BR-MER-004,PUT /api/v1/admin/merchants/{id}/approve,TC-MER-006,Verified,Completed
+Merchant,MER-005,Admin Merchant Rejection,Admin rejects merchant application with reason,High,BR-MER-005,PUT /api/v1/admin/merchants/{id}/reject,TC-MER-007,Verified,Completed
+Merchant,MER-006,Merchant Dashboard,Merchant logs into dashboard and views KPIs,High,BR-MER-015,GET /api/v1/merchant/dashboard/kpis,TC-MER-015,Verified,Completed
+Merchant,MER-007,View Merchant Orders,Merchant views list of orders with filters,High,BR-MER-016,GET /api/v1/merchant/orders,TC-MER-016,Verified,Completed
+Merchant,MER-008,Confirm Order,Merchant confirms incoming order,High,BR-ORD-009,PUT /api/v1/merchant/orders/{id}/confirm,TC-MER-020,Verified,Completed
+Merchant,MER-009,Mark Order Ready,Merchant marks order as ready for pickup,High,BR-ORD-009,PUT /api/v1/merchant/orders/{id}/ready,TC-MER-022,Verified,Completed
+Merchant,MER-010,Cancel Order,Merchant cancels order with reason,High,BR-ORD-009,PUT /api/v1/merchant/orders/{id}/cancel,TC-MER-023,Verified,Completed
+Merchant,MER-011,Add Menu Category,Merchant creates new menu category,High,BR-CAT-001,POST /api/v1/merchant/stores/{id}/menu/categories,TC-MER-025,Verified,Completed
+Merchant,MER-012,Add Menu Item,Merchant creates new menu item,High,BR-CAT-002,POST /api/v1/merchant/stores/{id}/menu/items,TC-MER-028,Verified,Completed
+Merchant,MER-013,Update Menu Item,Merchant updates existing menu item,High,BR-CAT-002,PUT /api/v1/merchant/stores/{id}/menu/items/{id},TC-MER-029,Verified,Completed
+Merchant,MER-014,Import Menu CSV,Bulk import menu via CSV/Excel file,High,BR-CAT-012,POST /api/v1/merchant/stores/{id}/menu/import,TC-MER-035,Verified,Completed
+Merchant,MER-015,Merchant Analytics,View merchant analytics dashboard and reports,High,BR-MER-016,GET /api/v1/merchant/analytics/dashboard,TC-MER-016,Verified,Completed
+Merchant,MER-016,Merchant Settlements,View merchant settlement history and details,High,BR-FIN-001,GET /api/v1/merchant/finance/settlements,TC-FIN-001,Verified,Completed
+Merchant,MER-017,Store Status Toggle,Merchant opens/closes store,High,BR-OPS-001,PUT /api/v1/merchant/stores/{id}/status,TC-MER-010,Verified,Completed
+Merchant,MER-018,Modifier Management,Create and manage item modifiers,High,BR-CAT-006,POST /api/v1/merchant/stores/{id}/menu/items/{id}/modifiers,TC-MER-031,Verified,Completed
+Driver,DRV-001,Driver Application Start,Start new driver registration application,High,BR-DRV-001,POST /api/v1/driver/application,TC-DRV-001,Verified,Completed
+Driver,DRV-002,Driver Application Complete,Complete and submit driver application,High,BR-DRV-002,PUT /api/v1/driver/application/{id},TC-DRV-002,Verified,Completed
+Driver,DRV-003,Document Upload,Upload driver verification documents,High,BR-DRV-003,POST /api/v1/driver/application/{id}/documents,TC-DRV-003,Verified,Completed
+Driver,DRV-004,Admin Driver Approval,Admin approves driver application,High,BR-DRV-004,PUT /api/v1/admin/drivers/{id}/approve,TC-DRV-004,Verified,Completed
+Driver,DRV-005,Driver Training,Complete mandatory driver training modules,High,BR-DRV-005,GET /api/v1/driver/training/modules,TC-DRV-006,Verified,Completed
+Driver,DRV-006,Driver App Login,Driver logs into mobile application,High,BR-DRV-010,POST /api/v1/auth/login,TC-DRV-009,Verified,Completed
+Driver,DRV-007,Go Online/Offline,Driver toggles availability status,High,BR-DRV-003,POST /api/v1/driver/session/online,TC-DRV-010,Verified,Completed
+Driver,DRV-008,Order Notification,Driver receives push notification for new order,High,BR-DRV-031,WebSocket / FCM,TC-DRV-011,Verified,Completed
+Driver,DRV-009,Accept Order,Driver accepts offered order,High,BR-DRV-012,POST /api/v1/driver/orders/{id}/accept,TC-DRV-012,Verified,Completed
+Driver,DRV-010,Decline Order,Driver declines offered order with reason,High,BR-DRV-012,POST /api/v1/driver/orders/{id}/decline,TC-DRV-013,Verified,Completed
+Driver,DRV-011,Navigate to Merchant,Driver navigates to merchant location,High,BR-DRV-036,GET /api/v1/driver/navigation/route,TC-DRV-015,Verified,Completed
+Driver,DRV-012,Confirm Pickup,Driver confirms order pickup at merchant,High,BR-DRV-041,POST /api/v1/driver/orders/{id}/pickup,TC-DRV-016,Verified,Completed
+Driver,DRV-013,Confirm Delivery,Driver confirms delivery to customer,High,BR-DRV-043,POST /api/v1/driver/orders/{id}/deliver,TC-DRV-018,Verified,Completed
+Driver,DRV-014,View Earnings,Driver views today's and weekly earnings,High,BR-DRV-049,GET /api/v1/driver/earnings/today,TC-DRV-022,Verified,Completed
+Driver,DRV-015,View Payouts,Driver views payout history and status,High,BR-DRV-051,GET /api/v1/driver/payouts,TC-DRV-023,Verified,Completed
+Driver,DRV-016,Take Break,Driver takes a break from deliveries,Medium,BR-DRV-008,POST /api/v1/driver/session/break,TC-DRV-024,Verified,Completed
+Driver,DRV-017,In-App Chat,Driver communicates with customer via chat,High,BR-DRV-046,GET/POST /api/v1/driver/deliveries/{id}/messages,TC-DRV-025,Verified,Completed
+Driver,DRV-018,Masked Call,Driver initiates masked call to customer,High,BR-DRV-007,POST /api/v1/driver/deliveries/{id}/call,TC-DRV-026,Verified,Completed
+Driver,DRV-019,Instant Payout,Driver requests instant payout,High,BR-DRV-010,POST /api/v1/driver/payouts/instant,TC-DRV-016,Verified,Completed
+Order,ORD-001,Place Order,Customer places new order,High,BR-ORD-001,POST /api/v1/orders,TC-ORD-001,Verified,Completed
+Order,ORD-002,Order Status PENDING,Order status set to PENDING after placement,High,BR-ORD-001,GET /api/v1/orders/{id}/status,TC-ORD-002,Verified,Completed
+Order,ORD-003,Merchant Confirmation,Merchant confirms incoming order,High,BR-ORD-008,PUT /api/v1/merchant/orders/{id}/confirm,TC-ORD-003,Verified,Completed
+Order,ORD-004,Order Status CONFIRMED,Order status transitions to CONFIRMED,High,BR-ORD-008,GET /api/v1/orders/{id}/status,TC-ORD-004,Verified,Completed
+Order,ORD-005,Merchant Preparation,Merchant starts order preparation,High,BR-ORD-009,PUT /api/v1/merchant/orders/{id}/prepare,TC-ORD-005,Verified,Completed
+Order,ORD-006,Order Status PREPARING,Order status transitions to PREPARING,High,BR-ORD-009,GET /api/v1/orders/{id}/status,TC-ORD-006,Verified,Completed
+Order,ORD-007,Mark Order Ready,Merchant marks order ready for pickup,High,BR-ORD-009,PUT /api/v1/merchant/orders/{id}/ready,TC-ORD-007,Verified,Completed
+Order,ORD-008,Order Status READY,Order status transitions to READY,High,BR-ORD-009,GET /api/v1/orders/{id}/status,TC-ORD-008,Verified,Completed
+Order,ORD-009,Driver Assignment,Driver assigned to ready order,High,BR-ORD-010,GET /api/v1/orders/{id}/status,TC-ORD-009,Verified,Completed
+Order,ORD-010,Order Status ASSIGNED,Order status transitions to ASSIGNED,High,BR-ORD-010,GET /api/v1/orders/{id}/status,TC-ORD-010,Verified,Completed
+Order,ORD-011,Driver Pickup,Driver picks up order from merchant,High,BR-DEL-002,POST /api/v1/driver/orders/{id}/pickup,TC-ORD-011,Verified,Completed
+Order,ORD-012,Order Status PICKED_UP,Order status transitions to PICKED_UP,High,BR-DEL-002,GET /api/v1/orders/{id}/status,TC-ORD-012,Verified,Completed
+Order,ORD-013,Driver En Route,Driver is en route to customer,High,BR-DEL-001,PUT /api/v1/driver/orders/{id}/location,TC-ORD-013,Verified,Completed
+Order,ORD-014,Order Status IN_TRANSIT,Order status transitions to IN_TRANSIT,High,BR-DEL-001,GET /api/v1/orders/{id}/status,TC-ORD-014,Verified,Completed
+Order,ORD-015,Driver Arrival,Driver arrives at customer location,High,BR-DEL-001,POST /api/v1/driver/deliveries/{id}/arrive-customer,TC-ORD-015,Verified,Completed
+Order,ORD-016,Order Status ARRIVING_SOON,Order status transitions to ARRIVING_SOON,High,BR-DEL-001,GET /api/v1/orders/{id}/status,TC-ORD-016,Verified,Completed
+Order,ORD-017,Delivery Completion,Driver completes delivery,High,BR-DEL-003,POST /api/v1/driver/orders/{id}/deliver,TC-ORD-017,Verified,Completed
+Order,ORD-018,Order Status DELIVERED,Order status transitions to DELIVERED,High,BR-DEL-003,GET /api/v1/orders/{id}/status,TC-ORD-018,Verified,Completed
+Order,ORD-019,Customer Pre-Confirmation Cancellation,Customer cancels order before merchant confirmation,High,BR-ORD-008,DELETE /api/v1/orders/{id},TC-ORD-019,Verified,Completed
+Order,ORD-020,Customer Post-Confirmation Cancellation,Customer cancels order after confirmation (approval required),High,BR-ORD-009,DELETE /api/v1/orders/{id},TC-ORD-020,Verified,Completed
+Order,ORD-021,Merchant Cancellation,Merchant cancels order,High,BR-ORD-009,PUT /api/v1/merchant/orders/{id}/cancel,TC-ORD-021,Verified,Completed
+Order,ORD-022,Delivery Failure,Driver reports delivery failure,High,BR-DEL-004,POST /api/v1/driver/deliveries/{id}/fail,TC-ORD-022,Verified,Completed
+Order,ORD-023,Refund Processing,Refund processed for cancelled/failed order,High,BR-FIN-007,POST /api/v1/payments/refund,TC-ORD-025,Verified,Completed
+Order,ORD-024,Real-Time Tracking,Customer views live order tracking,High,BR-DEL-001,GET /api/v1/orders/{id}/tracking,TC-ORD-023,Verified,Completed
+Order,ORD-025,Order Timeline,Customer views order status timeline,Medium,BR-DEL-001,GET /api/v1/orders/{id}/timeline,TC-ORD-017,Verified,Completed
+Payment,PAY-001,Add Payment Method,Customer adds credit/debit card payment method,High,BR-PAY-001,POST /api/v1/customers/me/payment-methods,TC-PAY-001,Verified,Completed
+Payment,PAY-002,Card Validation,Invalid card validation and error handling,High,BR-PAY-001,POST /api/v1/payments/validate/card,TC-PAY-002,Verified,Completed
+Payment,PAY-003,Pay with Saved Card,Process payment with saved credit card,High,BR-PAY-003,POST /api/v1/payments/authorize,TC-PAY-005,Verified,Completed
+Payment,PAY-004,Pay with New Card,Process payment with new credit card,High,BR-PAY-003,POST /api/v1/payments/authorize,TC-PAY-006,Verified,Completed
+Payment,PAY-005,Pay with Digital Wallet,Process payment with digital wallet (Apple Pay/Google Pay),High,BR-PAY-003,POST /api/v1/payments/authorize,TC-PAY-007,Verified,Completed
+Payment,PAY-006,Pay with COD,Process payment with Cash on Delivery,High,BR-PAY-008,POST /api/v1/payments/authorize,TC-PAY-008,Verified,Completed
+Payment,PAY-007,Authorization Failure,Payment authorization fails with error response,High,BR-PAY-011,POST /api/v1/payments/authorize,TC-PAY-009,Verified,Completed
+Payment,PAY-008,Full Refund,Process full refund for order,High,BR-PAY-007,POST /api/v1/payments/refund,TC-PAY-010,Verified,Completed
+Payment,PAY-009,Partial Refund,Process partial refund for order,High,BR-PAY-007,POST /api/v1/payments/refund,TC-PAY-011,Verified,Completed
+Payment,PAY-010,Wallet Top-up,Top up digital wallet balance,High,BR-PAY-005,POST /api/v1/customers/me/wallet/topup,TC-PAY-012,Verified,Completed
+Payment,PAY-011,Wallet Payment,Pay with digital wallet balance,High,BR-PAY-004,POST /api/v1/payments/authorize,TC-PAY-013,Verified,Completed
+Payment,PAY-012,Idempotency,Duplicate payment requests prevented with idempotency key,High,BR-PAY-003,POST /api/v1/payments/authorize,TC-PAY-015,Verified,Completed
+Payment,PAY-013,BNPL Payment,Process BNPL payment (Tabby/Tamara/Klarna),High,BR-PAY-003,POST /api/v1/payments/bnpl,TC-PAY-015,Verified,Completed
+Payment,PAY-014,Wallet Transaction History,View wallet transaction history,Medium,BR-PAY-004,GET /api/v1/customers/me/wallet/transactions,TC-PAY-014,Verified,Completed
+Dispatch,DSP-001,Order Assignment Queue,Orders enter assignment queue for dispatch,High,BR-DSP-001,GET /api/v1/dispatch/queue,TC-DSP-001,Verified,Completed
+Dispatch,DSP-002,Driver Availability,Driver availability updated in real-time,High,BR-DSP-003,GET /api/v1/dispatch/drivers/available,TC-DSP-002,Verified,Completed
+Dispatch,DSP-003,Assignment Algorithm,Assignment algorithm selects optimal driver,High,BR-DSP-007,POST /api/v1/dispatch/order/{id}/assign,TC-DSP-003,Verified,Completed
+Dispatch,DSP-004,Composite Score Calculation,Composite score calculated for driver selection,High,BR-DSP-007,POST /api/v1/dispatch/order/{id}/assign,TC-DSP-004,Verified,Completed
+Dispatch,DSP-005,Driver Accept Offer,Driver accepts order offer,High,BR-DSP-003,POST /api/v1/driver/orders/{id}/accept,TC-DSP-005,Verified,Completed
+Dispatch,DSP-006,Driver Decline Offer,Driver declines order offer,High,BR-DSP-003,POST /api/v1/driver/orders/{id}/decline,TC-DSP-006,Verified,Completed
+Dispatch,DSP-007,Auto-Decline,Order auto-declines after timer expires,High,BR-DSP-002,Internal,TC-DSP-007,Verified,Completed
+Dispatch,DSP-008,Batch Order Creation,Multiple orders batched into single trip,High,BR-DSP-006,POST /api/v1/dispatch/batch/create,TC-DSP-008,Verified,Completed
+Dispatch,DSP-009,Batch Route Optimization,Route optimized for batched orders,High,BR-DSP-006,POST /api/v1/dispatch/batch/create,TC-DSP-009,Verified,Completed
+Dispatch,DSP-010,Dynamic Reassignment,Order reassigned when driver drops out,High,BR-DSP-007,POST /api/v1/dispatch/order/{id}/reassign,TC-DSP-010,Verified,Completed
+Dispatch,DSP-011,Surge Pricing,Surge pricing applied during peak demand,High,BR-DSP-007,GET /api/v1/dispatch/surge/current,TC-DSP-012,Verified,Completed
+Dispatch,DSP-012,ETA Calculation,ETA calculated with traffic and weather,High,BR-DSP-005,POST /api/v1/dispatch/routing/eta,TC-DSP-011,Verified,Completed
+Finance,FIN-001,Merchant Settlement Calculation,Merchant settlement calculated correctly,High,BR-FIN-001,GET /api/v1/merchant/finance/settlements,TC-FIN-001,Verified,Completed
+Finance,FIN-002,Merchant Settlement Multi-Order,Merchant settlement with multiple orders,High,BR-FIN-001,GET /api/v1/merchant/finance/settlements/{id},TC-FIN-002,Verified,Completed
+Finance,FIN-003,Driver Payout Calculation,Driver payout calculated correctly,High,BR-FIN-006,GET /api/v1/driver/payouts,TC-FIN-003,Verified,Completed
+Finance,FIN-004,Driver Payout with Tips,Driver payout includes tips and bonuses,High,BR-FIN-006,GET /api/v1/driver/earnings/{id},TC-FIN-004,Verified,Completed
+Finance,FIN-005,Commission Percentage,Commission calculated as percentage of order,High,BR-FIN-003,GET /api/v1/merchant/finance/commission,TC-FIN-005,Verified,Completed
+Finance,FIN-006,Commission Tiered,Tiered commission based on order volume,High,BR-FIN-003,GET /api/v1/merchant/finance/commission,TC-FIN-006,Verified,Completed
+Finance,FIN-007,Tax Calculation,Tax calculated correctly per jurisdiction,High,BR-FIN-007,POST /api/v1/tax/calculate,TC-FIN-008,Verified,Completed
+Finance,FIN-008,Invoice Generation,Invoice generated for settlement,High,BR-FIN-004,GET /api/v1/merchant/finance/invoices,TC-FIN-009,Verified,Completed
+Finance,FIN-009,Gateway Reconciliation,Transaction reconciliation with payment gateway,High,BR-FIN-005,GET /api/v1/finance/reconciliation,TC-FIN-011,Verified,Completed
+Finance,FIN-010,Service Fee Calculation,Service fee calculated correctly,High,BR-FIN-003,GET /api/v1/merchant/finance/fees,TC-FIN-007,Verified,Completed
+Finance,FIN-011,Payment Processing Fee,Payment processing fee calculated correctly,High,BR-FIN-003,GET /api/v1/merchant/finance/fees,TC-FIN-007,Verified,Completed
+Admin,ADM-001,Admin Dashboard Access,Admin user logs into dashboard,High,BR-ADM-001,POST /api/v1/admin/login,TC-ADM-001,Verified,Completed
+Admin,ADM-002,Admin KPI Cards,Dashboard displays KPI cards,High,BR-ADM-001,GET /api/v1/admin/dashboard/kpis,TC-ADM-002,Verified,Completed
+Admin,ADM-003,Admin Order List,Admin views order list with filters,High,BR-ADM-002,GET /api/v1/admin/orders,TC-ADM-003,Verified,Completed
+Admin,ADM-004,Admin Order Details,Admin views detailed order information,High,BR-ADM-002,GET /api/v1/admin/orders/{id},TC-ADM-004,Verified,Completed
+Admin,ADM-005,Admin Order Cancellation,Admin cancels order with reason,High,BR-ADM-002,POST /api/v1/admin/orders/{id}/cancel,TC-ADM-005,Verified,Completed
+Admin,ADM-006,Admin Refund Processing,Admin processes refund for order,High,BR-ADM-002,POST /api/v1/admin/orders/{id}/refund,TC-ADM-006,Verified,Completed
+Admin,ADM-007,Admin Merchant Management,Admin views and manages merchants,High,BR-ADM-002,GET /api/v1/admin/merchants,TC-ADM-007,Verified,Completed
+Admin,ADM-008,Admin Merchant Approval,Admin approves merchant application,High,BR-ADM-002,PUT /api/v1/admin/merchants/{id}/approve,TC-ADM-008,Verified,Completed
+Admin,ADM-009,Admin Merchant Suspension,Admin suspends merchant account,High,BR-ADM-002,PUT /api/v1/admin/merchants/{id}/suspend,TC-ADM-010,Verified,Completed
+Admin,ADM-010,Admin Driver Management,Admin views and manages drivers,High,BR-ADM-002,GET /api/v1/admin/drivers,TC-ADM-011,Verified,Completed
+Admin,ADM-011,Admin Driver Approval,Admin approves driver application,High,BR-ADM-002,PUT /api/v1/admin/drivers/{id}/approve,TC-ADM-012,Verified,Completed
+Admin,ADM-012,Admin Driver Suspension,Admin suspends driver account,High,BR-ADM-002,PUT /api/v1/admin/drivers/{id}/suspend,TC-ADM-013,Verified,Completed
+Admin,ADM-013,Support Ticket Management,Admin views and manages support tickets,High,BR-ADM-009,GET /api/v1/admin/support/tickets,TC-ADM-014,Verified,Completed
+Admin,ADM-014,Support Ticket Response,Admin responds to support tickets,High,BR-ADM-009,POST /api/v1/admin/support/tickets/{id}/respond,TC-ADM-015,Verified,Completed
+Admin,ADM-015,Audit Logs,Admin views audit trail of actions,High,BR-ADM-008,GET /api/v1/admin/audit,TC-ADM-017,Verified,Completed
+Admin,ADM-016,Admin User Management,Admin creates and manages admin users,High,BR-ADM-003,POST /api/v1/admin/users,TC-ADM-019,Verified,Completed
+Admin,ADM-017,Platform Configuration,Admin updates platform configuration,High,BR-ADM-006,PUT /api/v1/admin/config,TC-ADM-022,Verified,Completed
+Security,SEC-001,User Authentication,Users authenticate with valid credentials,High,BR-SEC-001,POST /api/v1/auth/login,TC-AUTH-001,Verified,Completed
+Security,SEC-002,Account Lockout,Account locks after 5 failed login attempts,High,BR-SEC-002,POST /api/v1/auth/login,TC-AUTH-003,Verified,Completed
+Security,SEC-003,MFA for Admins,MFA required for admin accounts,High,BR-SEC-003,POST /api/v1/auth/mfa/verify,TC-AUTH-011,Verified,Completed
+Security,SEC-004,Access Token Expiry,Access tokens expire after 15 minutes,High,BR-SEC-004,POST /api/v1/auth/refresh,TC-AUTH-006,Verified,Completed
+Security,SEC-005,Refresh Token Expiry,Refresh tokens expire after 7 days,High,BR-SEC-005,POST /api/v1/auth/refresh,TC-AUTH-006,Verified,Completed
+Security,SEC-006,Session Timeout,Sessions timeout after 30 minutes inactivity,High,BR-SEC-006,GET /api/v1/auth/sessions,TC-AUTH-014,Verified,Completed
+Security,SEC-007,API Key Hashing,API keys are hashed before storage,High,BR-SEC-007,POST /api/v1/api-keys,TC-AUTH-016,Verified,Completed
+Security,SEC-008,Password Hashing,Passwords hashed with bcrypt/Argon2,High,BR-SEC-008,POST /api/v1/auth/register,TC-AUTH-001,Verified,Completed
+Security,SEC-009,RBAC,Role-based access control enforced,High,BR-SEC-001,GET /api/v1/admin/orders,TC-AUTH-008,Verified,Completed
+Security,SEC-010,Audit Logging,All authentication events logged,High,BR-SEC-010,GET /api/v1/admin/audit,TC-AUTH-022,Verified,Completed
+Security,SEC-011,Data at Rest Encryption,PII and sensitive data encrypted with AES-256,High,BR-PRIV-001,Internal,TC-SEC-001,Verified,Completed
+Security,SEC-012,Data in Transit Encryption,TLS 1.3 for all data transmission,High,BR-PRIV-001,Internal,TC-SEC-002,Verified,Completed
+Content,CONT-001,Create Banner,Admin creates new banner content,High,BR-CONT-001,POST /api/v1/admin/banners,TC-CONT-001,Verified,Completed
+Content,CONT-002,Schedule Content,Content scheduled for publication,High,BR-CONT-007,PUT /api/v1/admin/content/{id}/publish,TC-CONT-003,Verified,Completed
+Content,CONT-003,Auto-Publish,Scheduled content auto-publishes at set time,High,BR-CONT-007,Internal,TC-CONT-004,Verified,Completed
+Content,CONT-004,Auto-Archive,Expired content auto-archives,High,BR-CONT-008,Internal,TC-CONT-005,Verified,Completed
+Content,CONT-005,Create Promotion,Admin creates new promotion,High,BR-CONT-003,POST /api/v1/admin/promotions,TC-CONT-006,Verified,Completed
+Content,CONT-006,Promotion Usage Limit,Promotion usage limit enforced,High,BR-CONT-003,PUT /api/v1/admin/promotions/{id},TC-CONT-008,Verified,Completed
+Content,CONT-007,Promotion Per-Customer Limit,Per-customer promotion limit enforced,High,BR-CONT-003,PUT /api/v1/admin/promotions/{id},TC-CONT-009,Verified,Completed
+Content,CONT-008,Create Category,Admin creates new category,High,BR-CONT-005,POST /api/v1/admin/categories,TC-CONT-010,Verified,Completed
+Content,CONT-009,Multi-Language Translation,Content translated to multiple languages,High,BR-CONT-009,POST /api/v1/admin/content/{id}/translations,TC-CONT-016,Verified,Completed
+Content,CONT-010,Content Versioning,Content versions maintained with rollback,High,BR-CONT-006,GET /api/v1/admin/content/{id}/versions,TC-CONT-018,Verified,Completed
+Notifications,NOT-001,Push Notification Delivery,Push notification sent and delivered,High,BR-NOT-001,POST /api/v1/push/send,TC-NOTIFY-001,Verified,Completed
+Notifications,NOT-002,Email Delivery,Transactional email delivered,High,BR-NOT-001,POST /api/v1/email/send,TC-NOTIFY-002,Verified,Completed
+Notifications,NOT-003,SMS Delivery,SMS notification delivered,High,BR-NOT-001,POST /api/v1/sms/send,TC-NOTIFY-003,Verified,Completed
+Notifications,NOT-004,In-App Notification,In-app notification delivered,High,BR-NOT-001,POST /api/v1/notifications,TC-NOTIFY-004,Verified,Completed
+Notifications,NOT-005,Notification Template,Template rendered with variables,High,BR-NOT-006,POST /api/v1/notifications/templates,TC-NOTIFY-006,Verified,Completed
+Notifications,NOT-006,User Preferences,Notification preferences respected,High,BR-NOT-001,PUT /api/v1/notifications/preferences,TC-NOTIFY-009,Verified,Completed
+Notifications,NOT-007,Quiet Hours,Notifications respect quiet hours,High,BR-NOT-001,PUT /api/v1/notifications/preferences,TC-NOTIFY-012,Verified,Completed
+Notifications,NOT-008,Delivery Retry,Failed notifications retry with backoff,High,BR-NOT-004,POST /api/v1/notifications/{id}/retry,TC-NOTIFY-015,Verified,Completed
+Notifications,NOT-009,Open Tracking,Notification opens tracked,Medium,BR-NOT-005,GET /api/v1/notifications/analytics,TC-NOTIFY-017,Verified,Completed
+Notifications,NOT-010,Unsubscribe,One-click unsubscribe works,High,BR-NOT-003,POST /api/v1/notifications/preferences/unsubscribe,TC-NOTIFY-021,Verified,Completed
+API,API-001,API Versioning,Public APIs versioned in URL path,High,BR-API-001,GET /api/v1/api-docs,TC-API-005,Verified,Completed
+API,API-002,API Key Generation,API keys generated securely,High,BR-API-004,POST /api/v1/api-keys,TC-API-001,Verified,Completed
+API,API-003,Rate Limiting,Rate limits enforced at API gateway,High,BR-API-005,GET /api/v1/orders,TC-API-004,Verified,Completed
+API,API-004,OpenAPI Documentation,Interactive OpenAPI documentation available,High,BR-API-008,GET /api/v1/api-docs,TC-API-009,Verified,Completed
+API,API-005,SDK Generation,Official SDKs available for languages,High,BR-API-009,GET /api/v1/sdk,TC-SDK-001,Verified,Completed
+API,API-006,Webhook Management,Webhook subscriptions created and managed,High,BR-API-007,POST /api/v1/webhooks,TC-API-018,Verified,Completed
+API,API-007,CORS Headers,CORS headers configured correctly,High,BR-API-006,OPTIONS /api/v1/orders,TC-API-011,Verified,Completed
+API,API-008,Idempotency,Idempotency keys prevent duplicate requests,High,BR-API-006,POST /api/v1/orders,TC-API-012,Verified,Completed
+API,API-009,API Latency SLO,API response time < 500ms (P95),High,BR-API-010,GET /api/v1/orders,TC-API-013,Verified,Completed
+API,API-010,API Error Response,Consistent error response format,High,BR-API-006,GET /api/v1/orders/invalid,TC-API-008,Verified,Completed
+Quality,QA-001,Unit Test Coverage,Unit test coverage > 90%,High,BR-QA-001,Internal,TC-QA-001,Verified,Completed
+Quality,QA-002,Integration Test Coverage,Integration test coverage > 80%,High,BR-QA-002,Internal,TC-QA-002,Verified,Completed
+Quality,QA-003,Test Pass Rate,All tests pass before deployment,High,BR-QA-003,Internal,TC-QA-003,Verified,Completed
+Quality,QA-004,Performance Testing,Performance tests meet SLA targets,High,BR-QA-004,Internal,TC-QA-005,In Progress,Scheduled for Q3 2026
+Quality,QA-005,Security Scanning,Security scans have zero critical findings,High,BR-QA-005,Internal,TC-QA-006,Verified,Completed
+Quality,QA-006,Contract Testing,Contract tests pass for all APIs,High,BR-QA-006,Internal,TC-QA-003,Verified,Completed
+Quality,QA-007,Code Review,Code review approved by 2 reviewers,High,BR-QA-007,Internal,TC-QA-016,Verified,Completed
+Quality,QA-008,Defect Density,Defect density < 1 per 1000 lines,High,BR-QA-008,Internal,TC-QA-017,Verified,Completed
+Quality,QA-009,Technical Debt Ratio,Technical debt ratio < 10%,High,BR-QA-009,Internal,TC-QA-018,Verified,Completed
+Quality,QA-010,Quality Metrics Reporting,Quality metrics reported weekly,High,BR-QA-010,GET /api/v1/quality/metrics/reports,TC-QA-013,Verified,Completed
+Operations,OPS-001,P0 Incident Response,P0 incidents require immediate response (< 5 min),High,BR-OPS-001,Internal,TC-OPS-001,Verified,Completed
+Operations,OPS-002,Incident Post-Mortem,Post-mortem completed within 7 days,High,BR-OPS-002,POST /api/v1/ops/incidents/{id}/post-mortem,TC-OPS-006,Verified,Completed
+Operations,OPS-003,Scheduled Maintenance,Maintenance requires 24-hour notice,High,BR-OPS-003,POST /api/v1/ops/maintenance,TC-OPS-007,Verified,Completed
+Operations,OPS-004,On-Call Coverage,On-call rotation has 24/7 coverage,High,BR-OPS-005,GET /api/v1/ops/oncall/schedule,TC-OPS-010,Verified,Completed
+Operations,OPS-005,Alert Escalation,Critical alerts escalate within 10 minutes,High,BR-OPS-006,Internal,TC-OPS-011,Verified,Completed
+Operations,OPS-006,Disaster Recovery RTO,RTO < 15 minutes,High,BR-OPS-008,POST /api/v1/dr/failovers,TC-DR-007,In Progress,Scheduled for Q3 2026
+Operations,OPS-007,Disaster Recovery RPO,RPO < 5 minutes,High,BR-OPS-008,POST /api/v1/dr/failovers,TC-DR-008,In Progress,Scheduled for Q3 2026
+Operations,OPS-008,Database Backups,Database backups tested weekly,High,BR-OPS-009,POST /api/v1/dr/backups,TC-DR-001,Verified,Completed
+Operations,OPS-009,DR Drills,DR drills conducted quarterly,High,BR-OPS-010,POST /api/v1/dr/tests,TC-DR-012,In Progress,Scheduled for Q4 2026
+Operations,OPS-010,Runbooks,Runbooks available for critical services,High,BR-OPS-001,GET /api/v1/ops/runbooks,TC-OPS-019,Verified,Completed
