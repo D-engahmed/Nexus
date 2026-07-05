@@ -9,7 +9,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final featured = MockData.merchants.where((m) => m['featured'] == true).toList();
+    final featured = MockData.merchants
+        .where((m) => m['featured'] == true)
+        .toList();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -21,13 +23,28 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 child: Row(
                   children: [
-                    const Icon(Icons.menu_rounded, size: 24, color: AppColors.textPrimary),
+                    const Icon(
+                      Icons.menu_rounded,
+                      size: 24,
+                      color: AppColors.textPrimary,
+                    ),
                     const Spacer(),
-                    const Text('Nexus', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.primary)),
+                    // --- YOUR NEXUS LOGO HERE ---
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    // ----------------------------
                     const Spacer(),
                     CircleAvatar(
                       radius: 20,
-                      backgroundImage: NetworkImage('https://i.pravatar.cc/150?u=customer'),
+                      backgroundImage: NetworkImage(
+                        'https://i.pravatar.cc/150?u=customer',
+                      ),
                       backgroundColor: AppColors.border,
                     ),
                   ],
@@ -38,7 +55,10 @@ class HomeScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(14),
@@ -46,9 +66,19 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: const Row(
                     children: [
-                      Icon(Icons.search_rounded, color: AppColors.textHint, size: 22),
+                      Icon(
+                        Icons.search_rounded,
+                        color: AppColors.textHint,
+                        size: 22,
+                      ),
                       SizedBox(width: 12),
-                      Text('Search for food, groceries, or gifts...', style: TextStyle(color: AppColors.textHint, fontSize: 15)),
+                      Text(
+                        'Search for food, groceries, or gifts...',
+                        style: TextStyle(
+                          color: AppColors.textHint,
+                          fontSize: 15,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -74,7 +104,10 @@ class HomeScreen extends StatelessWidget {
                         top: 0,
                         bottom: 0,
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
                           child: Image.network(
                             'https://picsum.photos/seed/delivery-hero/300/200',
                             width: 180,
@@ -82,7 +115,11 @@ class HomeScreen extends StatelessWidget {
                             errorBuilder: (_, __, ___) => Container(
                               width: 180,
                               color: AppColors.primaryDark,
-                              child: const Icon(Icons.delivery_dining_rounded, color: Colors.white, size: 64),
+                              child: const Icon(
+                                Icons.delivery_dining_rounded,
+                                color: Colors.white,
+                                size: 64,
+                              ),
                             ),
                           ),
                         ),
@@ -94,23 +131,51 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.white.withAlpha(40),
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              child: const Text('FLASH DELIVERY', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 1)),
+                              child: const Text(
+                                'FLASH DELIVERY',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: 1,
+                                ),
+                              ),
                             ),
                             const SizedBox(height: 8),
-                            const Text('Hot meals in 20 mins', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w800)),
+                            const Text(
+                              'Hot meals in 20 mins',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
                             const SizedBox(height: 12),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: const Text('Order Now', style: TextStyle(color: AppColors.primary, fontSize: 13, fontWeight: FontWeight.w700)),
+                              child: const Text(
+                                'Order Now',
+                                style: TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -126,8 +191,22 @@ class HomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Categories', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
-                    Text('View All', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                    const Text(
+                      'Categories',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    Text(
+                      'View All',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -150,14 +229,26 @@ class HomeScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: AppColors.surface,
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: AppColors.border, width: 0.5),
+                            border: Border.all(
+                              color: AppColors.border,
+                              width: 0.5,
+                            ),
                           ),
                           child: Center(
-                            child: Text(cat['icon'] as String, style: const TextStyle(fontSize: 32)),
+                            child: Text(
+                              cat['icon'] as String,
+                              style: const TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 6),
-                        Text(cat['name'] as String, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+                        Text(
+                          cat['name'] as String,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ],
                     );
                   },
@@ -170,8 +261,22 @@ class HomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Featured Near You', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
-                    Text('View All', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                    const Text(
+                      'Featured Near You',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    Text(
+                      'View All',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -184,6 +289,7 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: featured.length,
                   separatorBuilder: (_, __) => const SizedBox(width: 12),
+                  // --- THIS IS THE MISSING PART THAT CAUSED YOUR ERROR ---
                   itemBuilder: (_, i) => _FeaturedCard(merchant: featured[i]),
                 ),
               ),
@@ -203,17 +309,40 @@ class HomeScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Get 50% Off Your Next Order', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
+                            const Text(
+                              'Get 50% Off Your Next Order',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
                             const SizedBox(height: 8),
-                            const Text('Use code: VELOCITY50', style: TextStyle(color: Colors.white70, fontSize: 14)),
+                            const Text(
+                              'Use code: VELOCITY50',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 14,
+                              ),
+                            ),
                             const SizedBox(height: 12),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: const Text('Copy Code', style: TextStyle(color: AppColors.primary, fontSize: 13, fontWeight: FontWeight.w700)),
+                              child: const Text(
+                                'Copy Code',
+                                style: TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -225,7 +354,11 @@ class HomeScreen extends StatelessWidget {
                           color: AppColors.primary,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.headset_mic_rounded, color: Colors.white, size: 28),
+                        child: const Icon(
+                          Icons.headset_mic_rounded,
+                          color: Colors.white,
+                          size: 28,
+                        ),
                       ),
                     ],
                   ),
@@ -235,16 +368,27 @@ class HomeScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                child: const Text('All Restaurants', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
+                child: const Text(
+                  'All Restaurants',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
               ),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (_, i) => MerchantCard(
                   merchant: MockData.merchants[i],
-                  onTap: () => Navigator.push(context, MaterialPageRoute(
-                    builder: (_) => MerchantDetailScreen(merchant: MockData.merchants[i]),
-                  )),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          MerchantDetailScreen(merchant: MockData.merchants[i]),
+                    ),
+                  ),
                 ),
                 childCount: MockData.merchants.length,
               ),
@@ -257,6 +401,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// --- THIS WAS MISSING IN MY LAST REPLY ---
 class _FeaturedCard extends StatelessWidget {
   final Map<String, dynamic> merchant;
   const _FeaturedCard({required this.merchant});
@@ -264,9 +409,12 @@ class _FeaturedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(
-        builder: (_) => MerchantDetailScreen(merchant: merchant),
-      )),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MerchantDetailScreen(merchant: merchant),
+        ),
+      ),
       child: Container(
         width: 200,
         decoration: BoxDecoration(
@@ -288,7 +436,10 @@ class _FeaturedCard extends StatelessWidget {
                   errorBuilder: (_, __, ___) => Container(
                     height: 110,
                     color: AppColors.primary.withAlpha(30),
-                    child: const Icon(Icons.restaurant, color: AppColors.primary),
+                    child: const Icon(
+                      Icons.restaurant,
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
                 if ((merchant['badge'] as String).isNotEmpty)
@@ -296,12 +447,22 @@ class _FeaturedCard extends StatelessWidget {
                     top: 8,
                     right: 8,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.accent,
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: Text(merchant['badge'] as String, style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
+                      child: Text(
+                        merchant['badge'] as String,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
                 if (merchant['promoted'] == true)
@@ -309,12 +470,22 @@ class _FeaturedCard extends StatelessWidget {
                     top: 8,
                     left: 8,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.primary,
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: const Text('PROMOTED', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
+                      child: const Text(
+                        'PROMOTED',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
               ],
@@ -324,17 +495,48 @@ class _FeaturedCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(merchant['name'] as String, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textPrimary), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  Text(
+                    merchant['name'] as String,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   const SizedBox(height: 2),
                   Row(
                     children: [
-                      const Icon(Icons.star_rounded, size: 14, color: AppColors.rating),
-                      Text(' ${merchant['rating']}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-                      Text(' · ${merchant['cuisine']}', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                      const Icon(
+                        Icons.star_rounded,
+                        size: 14,
+                        color: AppColors.rating,
+                      ),
+                      Text(
+                        ' ${merchant['rating']}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        ' · ${merchant['cuisine']}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 2),
-                  Text('${merchant['deliveryTime']} min · \$${merchant['deliveryFee']} delivery', style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+                  Text(
+                    '${merchant['deliveryTime']} min · \$${merchant['deliveryFee']} delivery',
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                 ],
               ),
             ),

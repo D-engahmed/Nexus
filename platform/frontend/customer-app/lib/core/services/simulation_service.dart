@@ -35,7 +35,8 @@ class DeliverySimulation {
   }) : startTime = startTime ?? DateTime.now();
 
   SimulationPoint get currentPosition => route[currentIndex];
-  double get progress => route.length > 1 ? currentIndex / (route.length - 1) : 1.0;
+  double get progress =>
+      route.length > 1 ? currentIndex / (route.length - 1) : 1.0;
   bool get isComplete => currentIndex >= route.length - 1;
 }
 
@@ -47,23 +48,45 @@ class SimulationService extends ChangeNotifier {
   List<DeliverySimulation> get activeSimulations => _activeSimulations;
 
   static List<SimulationPoint> _generateRoute(
-    SimulationPoint from, SimulationPoint to, int steps
+    SimulationPoint from,
+    SimulationPoint to,
+    int steps,
   ) {
     final points = <SimulationPoint>[];
     for (int i = 0; i <= steps; i++) {
       final t = i / steps;
-      points.add(SimulationPoint(
-        from.lat + (to.lat - from.lat) * t,
-        from.lng + (to.lng - from.lng) * t,
-      ));
+      points.add(
+        SimulationPoint(
+          from.lat + (to.lat - from.lat) * t,
+          from.lng + (to.lng - from.lng) * t,
+        ),
+      );
     }
     return points;
   }
 
   static final _drivers = [
-    {'name': 'Ahmed Hassan', 'photo': 'https://i.pravatar.cc/150?u=driver1', 'rating': 4.8, 'phone': '+201001234567', 'vehicle': 'Toyota Corolla · ABC 1234'},
-    {'name': 'Mohamed Ali', 'photo': 'https://i.pravatar.cc/150?u=driver2', 'rating': 4.6, 'phone': '+201009876543', 'vehicle': 'Honda Civic · XYZ 5678'},
-    {'name': 'Sara Ibrahim', 'photo': 'https://i.pravatar.cc/150?u=driver3', 'rating': 4.9, 'phone': '+201005566778', 'vehicle': 'Kia Rio · DEF 9012'},
+    {
+      'name': 'Ahmed Hassan',
+      'photo': 'https://i.pravatar.cc/150?u=driver1',
+      'rating': 4.8,
+      'phone': '+201001234567',
+      'vehicle': 'Toyota Corolla · ABC 1234',
+    },
+    {
+      'name': 'Mohamed Ali',
+      'photo': 'https://i.pravatar.cc/150?u=driver2',
+      'rating': 4.6,
+      'phone': '+201009876543',
+      'vehicle': 'Honda Civic · XYZ 5678',
+    },
+    {
+      'name': 'Sara Ibrahim',
+      'photo': 'https://i.pravatar.cc/150?u=driver3',
+      'rating': 4.9,
+      'phone': '+201005566778',
+      'vehicle': 'Kia Rio · DEF 9012',
+    },
   ];
 
   static final _merchantPositions = {
@@ -81,21 +104,24 @@ class SimulationService extends ChangeNotifier {
     _orderCounter++;
     final orderId = 'NEX-${_orderCounter.toString().padLeft(4, '0')}';
     final driver = _drivers[_orderCounter % _drivers.length];
-    final merchantPos = _merchantPositions[merchantId] ?? SimulationPoint(30.0444, 31.2357);
+    final merchantPos =
+        _merchantPositions[merchantId] ?? SimulationPoint(30.0444, 31.2357);
 
     final route = _generateRoute(merchantPos, _customerPosition, 20);
 
-    _activeSimulations.add(DeliverySimulation(
-      orderId: orderId,
-      driverName: driver['name'] as String,
-      driverPhoto: driver['photo'] as String,
-      driverRating: (driver['rating'] as num).toDouble(),
-      driverPhone: driver['phone'] as String,
-      vehicleInfo: driver['vehicle'] as String,
-      merchantPos: merchantPos,
-      customerPos: _customerPosition,
-      route: route,
-    ));
+    _activeSimulations.add(
+      DeliverySimulation(
+        orderId: orderId,
+        driverName: driver['name'] as String,
+        driverPhoto: driver['photo'] as String,
+        driverRating: (driver['rating'] as num).toDouble(),
+        driverPhone: driver['phone'] as String,
+        vehicleInfo: driver['vehicle'] as String,
+        merchantPos: merchantPos,
+        customerPos: _customerPosition,
+        route: route,
+      ),
+    );
 
     if (!_isRunning) _startTimer();
     notifyListeners();

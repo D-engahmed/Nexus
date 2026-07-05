@@ -5,6 +5,7 @@ import 'features/auth/providers/auth_provider.dart';
 import 'features/auth/screens/login_screen.dart';
 import 'features/home/screens/home_screen.dart';
 import 'features/orders/screens/orders_screen.dart';
+import 'features/profile/screens/profile_screen.dart';
 
 class NexusCustomerApp extends StatelessWidget {
   const NexusCustomerApp({super.key});
@@ -43,17 +44,29 @@ class _MainShellState extends State<MainShell> {
           const HomeScreen(),
           const OrdersScreen(),
           const _WalletPlaceholder(),
-          const _ProfilePlaceholder(),
+          const ProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (i) => setState(() => _currentIndex = i),
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.receipt_long_rounded), label: 'Orders'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_balance_wallet_rounded), label: 'Wallet'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_long_rounded),
+            label: 'Orders',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_wallet_rounded),
+            label: 'Wallet',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_rounded),
+            label: 'Profile',
+          ),
         ],
       ),
     );
@@ -70,41 +83,27 @@ class _WalletPlaceholder extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 80, height: 80,
-            decoration: BoxDecoration(color: AppColors.primary.withAlpha(20), shape: BoxShape.circle),
-            child: const Icon(Icons.account_balance_wallet_rounded, size: 40, color: AppColors.primary),
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: AppColors.primary.withAlpha(20),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.account_balance_wallet_rounded,
+              size: 40,
+              color: AppColors.primary,
+            ),
           ),
           const SizedBox(height: 16),
-          const Text('Wallet', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+          const Text(
+            'Wallet',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+          ),
           const SizedBox(height: 8),
-          const Text('Your balance and transactions', style: TextStyle(color: AppColors.textSecondary)),
-        ],
-      ),
-    );
-  }
-}
-
-class _ProfilePlaceholder extends StatelessWidget {
-  const _ProfilePlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    final auth = context.watch<AuthProvider>();
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(radius: 48, backgroundImage: NetworkImage(auth.user?['photo'] ?? ''), backgroundColor: AppColors.border),
-          const SizedBox(height: 16),
-          Text(auth.user?['name'] ?? '', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
-          const SizedBox(height: 4),
-          Text(auth.user?['email'] ?? '', style: const TextStyle(color: AppColors.textSecondary)),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () => auth.logout(),
-            icon: const Icon(Icons.logout),
-            label: const Text('Sign Out'),
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+          const Text(
+            'Your balance and transactions',
+            style: TextStyle(color: AppColors.textSecondary),
           ),
         ],
       ),

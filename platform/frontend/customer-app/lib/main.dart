@@ -6,6 +6,7 @@ import 'features/auth/providers/auth_provider.dart';
 import 'features/home/providers/merchant_provider.dart';
 import 'features/orders/providers/order_provider.dart';
 import 'features/tracking/providers/tracking_provider.dart';
+import 'features/profile/providers/profile_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => TrackingProvider()),
         ChangeNotifierProvider(create: (_) => SimulationService()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ],
       child: const NexusCustomerApp(),
     ),

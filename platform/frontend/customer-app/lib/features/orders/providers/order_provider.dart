@@ -6,7 +6,12 @@ class OrderItem {
   final double price;
   final int quantity;
 
-  OrderItem({required this.id, required this.name, required this.price, this.quantity = 1});
+  OrderItem({
+    required this.id,
+    required this.name,
+    required this.price,
+    this.quantity = 1,
+  });
 
   double get total => price * quantity;
 }
@@ -41,9 +46,14 @@ class OrderProvider extends ChangeNotifier {
 
   List<AppOrder> get orders => _orders;
   List<Map<String, dynamic>> get cart => _cart;
-  bool get hasActiveOrders => _orders.any((o) => o.status == 'DRIVER_ASSIGNED' || o.status == 'IN_TRANSIT');
+  bool get hasActiveOrders => _orders.any(
+    (o) => o.status == 'DRIVER_ASSIGNED' || o.status == 'IN_TRANSIT',
+  );
 
-  double get cartTotal => _cart.fold(0.0, (sum, item) => sum + (item['price'] as double) * (item['quantity'] as int));
+  double get cartTotal => _cart.fold(
+    0.0,
+    (sum, item) => sum + (item['price'] as double) * (item['quantity'] as int),
+  );
 
   void addToCart(Map<String, dynamic> item) {
     final existing = _cart.indexWhere((i) => i['id'] == item['id']);
@@ -77,18 +87,26 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  AppOrder placeOrder(String merchantId, String merchantName, String merchantImage) {
+  AppOrder placeOrder(
+    String merchantId,
+    String merchantName,
+    String merchantImage,
+  ) {
     final order = AppOrder(
       id: 'NEX-${(_orders.length + 1).toString().padLeft(4, '0')}',
       merchantId: merchantId,
       merchantName: merchantName,
       merchantImage: merchantImage,
-      items: _cart.map((item) => OrderItem(
-        id: item['id'] as String,
-        name: item['name'] as String,
-        price: (item['price'] as num).toDouble(),
-        quantity: item['quantity'] as int,
-      )).toList(),
+      items: _cart
+          .map(
+            (item) => OrderItem(
+              id: item['id'] as String,
+              name: item['name'] as String,
+              price: (item['price'] as num).toDouble(),
+              quantity: item['quantity'] as int,
+            ),
+          )
+          .toList(),
       total: cartTotal,
       status: 'CONFIRMED',
       createdAt: DateTime.now().toIso8601String(),
