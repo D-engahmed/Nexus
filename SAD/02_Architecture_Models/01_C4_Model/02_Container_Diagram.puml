@@ -1,0 +1,87 @@
+
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container Diagram - [Nexus]
+
+Person(customer, "Customer", "End consumer")
+Person(merchant, "Merchant", "Store manager")
+Person(driver, "Driver", "Courier")
+Person(admin, "Admin", "Platform operations")
+
+System_Boundary(platform, "[Platform Name]") {
+    Container(gateway, "API Gateway", "Kong/KrakenD", "Routing, auth, rate limiting")
+    Container(auth, "Auth Service", "Go/Spring Boot", "Authentication, authorization")
+    Container(customer_svc, "Customer Service", "Go/Spring Boot", "Customer management")
+    Container(merchant_svc, "Merchant Service", "Go/Spring Boot", "Merchant management")
+    Container(driver_svc, "Driver Service", "Go/Spring Boot", "Driver management")
+    Container(order_svc, "Order Service", "Go/Spring Boot", "Order orchestration")
+    Container(payment_svc, "Payment Service", "Go/Spring Boot", "Payment processing")
+    Container(delivery_svc, "Delivery Service", "Go/Spring Boot", "Delivery execution")
+    Container(dispatch_svc, "Dispatch Service", "Go/Spring Boot", "Order routing & assignment")
+    Container(finance_svc, "Finance Service", "Go/Spring Boot", "Settlements, payouts")
+    Container(notif_svc, "Notification Service", "Node.js/Go", "Multi-channel notifications")
+    Container(analytics_svc, "Analytics Service", "Python/Go", "Business intelligence")
+    Container(admin_svc, "Admin Service", "Go/Spring Boot", "Platform administration")
+    Container(integration_svc, "Integration Service", "Go/Python", "Third-party integrations")
+
+    ContainerDb(db, "PostgreSQL", "AWS RDS", "Primary transactional database")
+    ContainerDb(cache, "Redis", "ElastiCache", "Caching, sessions")
+    ContainerDb(kafka, "Kafka", "AWS MSK", "Event streaming")
+    ContainerDb(es, "Elasticsearch", "OpenSearch", "Search, logs")
+}
+
+Rel(customer, gateway, "Uses", "HTTPS")
+Rel(merchant, gateway, "Uses", "HTTPS")
+Rel(driver, gateway, "Uses", "HTTPS")
+Rel(admin, gateway, "Uses", "HTTPS")
+
+Rel(gateway, auth, "Authenticates", "HTTP/gRPC")
+Rel(gateway, customer_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, merchant_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, driver_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, order_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, payment_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, delivery_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, dispatch_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, finance_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, notif_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, analytics_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, admin_svc, "Routes", "HTTP/gRPC")
+Rel(gateway, integration_svc, "Routes", "HTTP/gRPC")
+
+Rel(customer_svc, db, "Reads/Writes", "SQL")
+Rel(merchant_svc, db, "Reads/Writes", "SQL")
+Rel(driver_svc, db, "Reads/Writes", "SQL")
+Rel(order_svc, db, "Reads/Writes", "SQL")
+Rel(payment_svc, db, "Reads/Writes", "SQL")
+Rel(delivery_svc, db, "Reads/Writes", "SQL")
+Rel(dispatch_svc, db, "Reads/Writes", "SQL")
+Rel(finance_svc, db, "Reads/Writes", "SQL")
+Rel(admin_svc, db, "Reads/Writes", "SQL")
+
+Rel(customer_svc, cache, "Caches", "Redis Protocol")
+Rel(merchant_svc, cache, "Caches", "Redis Protocol")
+Rel(driver_svc, cache, "Caches", "Redis Protocol")
+Rel(order_svc, cache, "Caches", "Redis Protocol")
+
+Rel(order_svc, kafka, "Publishes events", "Kafka Protocol")
+Rel(payment_svc, kafka, "Publishes events", "Kafka Protocol")
+Rel(delivery_svc, kafka, "Publishes events", "Kafka Protocol")
+Rel(dispatch_svc, kafka, "Publishes events", "Kafka Protocol")
+Rel(finance_svc, kafka, "Publishes events", "Kafka Protocol")
+
+Rel(kafka, notif_svc, "Consumes", "Kafka Protocol")
+Rel(kafka, analytics_svc, "Consumes", "Kafka Protocol")
+Rel(kafka, finance_svc, "Consumes", "Kafka Protocol")
+
+Rel(order_svc, notif_svc, "Sends", "HTTP/gRPC")
+Rel(payment_svc, notif_svc, "Sends", "HTTP/gRPC")
+Rel(delivery_svc, notif_svc, "Sends", "HTTP/gRPC")
+
+Rel(integration_svc, es, "Indexes", "HTTP")
+Rel(analytics_svc, es, "Queries", "HTTP")
+
+@enduml

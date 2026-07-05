@@ -1,0 +1,39 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title System Context Diagram - [Nexus]
+
+Person(customer, "Customer", "End consumer placing orders")
+Person(merchant, "Merchant Staff", "Store manager managing orders")
+Person(driver, "Delivery Driver", "Courier completing deliveries")
+Person(admin, "Platform Admin", "Internal operations team")
+Person(developer, "3rd-Party Developer", "External developers building on APIs")
+Person(enterprise, "Enterprise Partner", "Enterprise using white-label solutions")
+
+System(platform, "[Platform Name]", "API-first, event-driven commerce and logistics platform")
+
+System_Ext(payment_gateway, "Payment Gateways", "Stripe, Paymob, Adyen")
+System_Ext(maps, "Mapping Services", "Google Maps, Mapbox")
+System_Ext(erp, "ERP/POS Systems", "SAP, Oracle, Micros")
+System_Ext(notify, "Notification Providers", "FCM, Twilio, SendGrid")
+System_Ext(idp, "Identity Providers", "Okta, Azure AD")
+System_Ext(storage, "Object Storage", "S3, GCS, Azure Blob")
+
+Rel(customer, platform, "Places orders, tracks deliveries", "HTTPS / WebSocket")
+Rel(merchant, platform, "Manages orders, menu, inventory", "HTTPS")
+Rel(driver, platform, "Accepts orders, updates location", "HTTPS / WebSocket")
+Rel(admin, platform, "Monitors and manages platform", "HTTPS")
+Rel(developer, platform, "Integrates via APIs, SDKs", "HTTPS")
+Rel(enterprise, platform, "Uses white-label solutions", "HTTPS / gRPC")
+
+Rel(platform, payment_gateway, "Processes payments, refunds", "HTTPS / Webhook")
+Rel(platform, maps, "Geocoding, routing, ETA", "HTTPS / gRPC")
+Rel(platform, erp, "Syncs inventory, orders", "REST / Kafka")
+Rel(platform, notify, "Sends push, email, SMS", "HTTPS / gRPC")
+Rel(platform, idp, "SSO, user provisioning", "SAML / OIDC")
+Rel(platform, storage, "Stores static assets", "S3 API / gRPC")
+
+@enduml
+

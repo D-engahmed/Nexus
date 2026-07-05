@@ -1,0 +1,50 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Deployment Diagram - [Nexus]
+
+Deployment_Node(aws_us_east_1, "AWS us-east-1", "Primary Region") {
+    Deployment_Node(eks_cluster, "EKS Cluster", "Kubernetes 1.28") {
+        Deployment_Node(edge_ns, "edge", "Namespace") {
+            Container(gateway, "API Gateway", "Kong", "5 replicas")
+            Container(auth, "Auth Service", "Go", "5 replicas")
+        }
+        Deployment_Node(core_ns, "core", "Namespace") {
+            Container(customer_svc, "Customer Service", "Go", "5 replicas")
+            Container(merchant_svc, "Merchant Service", "Go", "5 replicas")
+            Container(driver_svc, "Driver Service", "Go", "5 replicas")
+            Container(order_svc, "Order Service", "Go", "5 replicas")
+            Container(payment_svc, "Payment Service", "Go", "5 replicas")
+            Container(delivery_svc, "Delivery Service", "Go", "5 replicas")
+            Container(dispatch_svc, "Dispatch Service", "Go", "5 replicas")
+        }
+        Deployment_Node(support_ns, "support", "Namespace") {
+            Container(finance_svc, "Finance Service", "Go", "3 replicas")
+            Container(notif_svc, "Notification Service", "Node.js", "3 replicas")
+            Container(analytics_svc, "Analytics Service", "Python", "2 replicas")
+            Container(admin_svc, "Admin Service", "Go", "3 replicas")
+            Container(integration_svc, "Integration Service", "Go", "3 replicas")
+        }
+    }
+
+    Deployment_Node(db_layer, "Database Layer") {
+        ContainerDb(postgres, "PostgreSQL", "RDS Multi-AZ", "Primary + Replica")
+        ContainerDb(redis, "Redis", "ElastiCache Cluster", "3 nodes")
+        ContainerDb(kafka, "Kafka", "MSK Cluster", "6 brokers")
+        ContainerDb(elasticsearch, "Elasticsearch", "OpenSearch", "3 nodes")
+    }
+}
+
+Deployment_Node(aws_us_west_2, "AWS us-west-2", "DR Region") {
+    Deployment_Node(eks_cluster_dr, "EKS Cluster", "Kubernetes 1.28") {
+        Container(gateway_dr, "API Gateway", "Kong", "3 replicas (standby)")
+        Container(auth_dr, "Auth Service", "Go", "3 replicas (standby)")
+        Container(order_svc_dr, "Order Service", "Go", "3 replicas (standby)")
+    }
+
+    ContainerDb(postgres_dr, "PostgreSQL", "RDS Replica", "Read replica")
+}
+
+@enduml

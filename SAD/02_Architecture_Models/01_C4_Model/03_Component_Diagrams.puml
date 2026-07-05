@@ -1,0 +1,40 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Component Diagram - Order Service
+
+Container_Boundary(order_service, "Order Service") {
+    Component(api, "Order API", "HTTP/gRPC", "Handles order-related requests")
+    Component(validator, "Order Validator", "Service", "Validates order data")
+    Component(creator, "Order Creator", "Service", "Creates new orders")
+    Component(state_machine, "State Machine", "Service", "Manages order state transitions")
+    Component(timeline, "Timeline Service", "Service", "Tracks order timeline")
+    Component(tracking, "Tracking Service", "Service", "Provides real-time tracking")
+    Component(payment_client, "Payment Client", "gRPC", "Communicates with Payment Service")
+    Component(delivery_client, "Delivery Client", "gRPC", "Communicates with Delivery Service")
+    Component(dispatch_client, "Dispatch Client", "gRPC", "Communicates with Dispatch Service")
+    Component(notification_client, "Notification Client", "gRPC", "Communicates with Notification Service")
+
+    ContainerDb(order_db, "Order Database", "PostgreSQL", "Stores order data")
+}
+
+Rel(api, validator, "Validates request")
+Rel(api, creator, "Creates order")
+Rel(api, state_machine, "Updates status")
+Rel(api, timeline, "Gets timeline")
+Rel(api, tracking, "Gets tracking")
+
+Rel(creator, payment_client, "Authorizes payment")
+Rel(creator, delivery_client, "Creates delivery")
+Rel(creator, dispatch_client, "Queues order")
+Rel(creator, notification_client, "Sends confirmation")
+
+Rel(validator, order_db, "Reads", "SQL")
+Rel(creator, order_db, "Writes", "SQL")
+Rel(state_machine, order_db, "Updates", "SQL")
+Rel(timeline, order_db, "Reads", "SQL")
+Rel(tracking, order_db, "Reads", "SQL")
+
+@enduml
